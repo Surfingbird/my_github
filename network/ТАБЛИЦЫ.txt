@@ -1,0 +1,54 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'user'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `user`;
+		
+CREATE TABLE `user` (
+  `id_user` INTEGER NULL DEFAULT NULL,
+  `first_name` MEDIUMTEXT NULL DEFAULT NULL,
+  `second_name` MEDIUMTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+);
+
+-- ---
+-- Table 'friends'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `friends`;
+		
+CREATE TABLE `friends` (
+  `id_user` INTEGER NULL DEFAULT NULL,
+  `user_friend` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `user` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `friends` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `user` (`id_user`,`first_name`,`second_name`) VALUES
+-- ('','','');
+-- INSERT INTO `friends` (`id_user`,`user_friend`) VALUES
+-- ('','');
