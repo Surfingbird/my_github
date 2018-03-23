@@ -1,0 +1,10 @@
+#logrotate_file
+
+/home/checker/data/iostat-logger.log {
+su checker root
+rotate 5
+compress
+daily
+ifempty
+create 644 checker
+}

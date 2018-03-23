@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+MAILTO=checker
+0-59 * * * * /home/checker/bin/mdstat-logger.sh
+0-59 * * * * /home/checker/bin/iostat-logger.sh
+0 0 * * * logrotate /etc/logrotate.d/iostat-logger
+*/10 * * * * /home/checker/bin/iostat-alerter.sh
