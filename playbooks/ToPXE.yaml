@@ -1,0 +1,99 @@
+---
+- hosts: centos7
+  remote_user: root
+
+  tasks:
+  - name: Install vim 
+    yum:
+      name: vim 
+      state: latest
+  - name: Install wget
+    yum:
+      name: wget
+      state: latest
+  - name: Install sysstat
+    yum:
+      name: sysstat
+      state: latest
+  - name: Install dhcp
+    yum:
+      name: dhcp
+      state: latest
+#  - name: Install screen
+#    yum:
+#      name: screen
+#      state: latest
+  - name: Install epel-release
+    yum:
+      name: epel-release
+      state: latest
+  - name: Install tftp
+    yum:
+      name: tftp
+      state: latest
+  - name: Install tftp-server
+    yum:
+      name: tftp-server
+      state: latest
+  - name: Install syslinux-tftpboot
+    yum:
+      name: syslinux-tftpboot
+      state: latest
+  - name: Install nginx
+    yum:
+      name: nginx
+      state: latest
+  - name: Install xinetd
+    yum:
+      name: xinetd
+      state: latest
+
+  - name: Move dhcpd.conf
+    copy:
+      src: /etc/ansible/PXE_configs/dhcpd.conf
+      dest: /etc/dhcp/dhcpd.conf
+      owner: root
+      group: root
+      mode: u=rwx,g=rwx,o=r
+  - name: Move tftp
+    copy:
+      src: /etc/ansible/PXE_configs/tftp
+      dest: /etc/xinetd.d/tftp
+      owner: root
+      group: root
+      mode: u=rwx,g=rwx,o=r
+  - name: Move nginx.conf
+    copy:
+      src: /etc/ansible/PXE_configs/nginx.conf
+      dest: /etc/nginx/nginx.conf
+      owner: root
+      group: root
+      mode: u=rwx,g=rwx,o=r
+  - name: mkdir pxelinux.cfg
+    shell: mkdir /var/lib/tftpboot/pxelinux.cfg
+  - name: Move default
+    copy:
+      src: /etc/ansible/PXE_configs/default
+      dest: /var/lib/tftpboot/pxelinux.cfg/default
+      owner: root
+      group: root
+      mode: u=rwx,g=rwx,o=r
+  - name: mkdir /var/lib/tftpboot/images
+    shell: mkdir /var/lib/tftpboot/images
+  - name: mkdir /var/lib/tftpboot/images/centos7
+    shell: mkdir /var/lib/tftpboot/images/centos7
+  - name: wget centos7
+    shell: wget --directory-prefix=/var/lib/tftpboot/images http://mirror.yandex.ru/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso
+  - name: mount ISO
+    shell: mount -o loop /var/lib/tftpboot/images/CentOS-7-x86_64-Minimal-1708.iso /var/lib/tftpboot/images/centos7
+  - name: Setenforce down 
+    shell: setenforce 0
+  - name: stop firewalld
+    shell: systemctl stop firewalld
+  - name: disable firewalld
+    shell: systemctl disable firewalld
+  - name:  start nginx tftp dhcpd
+    shell: systemctl start nginx tftp dhcpd
+  - name: enable nginx tftp dhcpd
+    shell: systemctl enable nginx tftp dhcpd
+

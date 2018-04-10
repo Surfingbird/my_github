@@ -1,0 +1,22 @@
+default vesamenu.c32
+prompt 0
+timeout 300
+ONTIMEOUT local
+
+MENU TITLE PXE Menu
+
+LABEL local
+	MENU LABEL Boot from Local Drive
+	LOCALBOOT 0
+
+LABEL СentOS 7 x86_64 Minimal
+	MENU LABEL Install CentOS 7.0 x86_64 Minimal
+	KERNEL images/centos7/images/pxeboot/vmlinuz
+	APPEND initrd=images/centos7/images/pxeboot/initrd.img ramdisk_size=100000 ip=dhcp inst.repo=http://192.168.142.101/images/centos7
+# ks=tftp://192.168.142.101/imagex/c7.ks
+
+LABEL CentOS 7 x86_64 Minimal Rescue
+	MENU LABEL Install CentOS 7.0 x86_64 Minimal Rescue 
+	KERNEL images/centos7/images/pxeboot/vmlinuz
+	APPEND initrd=images/centos7/images/pxeboot/initrd.img ramdisk_size=100000 ip=dhcp inst.repo=http://192.168.142.101/images/centos7 rescue
+
